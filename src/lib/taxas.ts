@@ -1,0 +1,77 @@
+import { Package, Truck, Building, Users, Receipt, FileText, Calculator, CreditCard, Target } from "lucide-react";
+
+// Suas taxas reais com ícones apropriados
+export const taxas = [
+  {
+    nome: "Custo",
+    key: "custo",
+    valor: 0,
+    editavel: true,
+    icon: Package,
+    variant: "secondary",
+  },
+  {
+    nome: "Frete",
+    key: "frete",
+    valor: 0,
+    editavel: true,
+    icon: Truck,
+    variant: "secondary",
+  },
+  {
+    nome: "Despesas Fixas",
+    key: "fixas",
+    valor: 0,
+    editavel: true,
+    icon: Building,
+    variant: "secondary",
+  },
+  {
+    nome: "Comissão Repres.",
+    key: "comissao",
+    valor: 0,
+    editavel: true,
+    icon: Users,
+    variant: "secondary",
+  },
+  {
+    nome: "I. Renda",
+    key: "ir",
+    valor: 0,
+    editavel: true,
+    icon: Receipt,
+    variant: "destructive",
+  },
+  {
+    nome: "ICMS",
+    key: "icms",
+    valor: 0,
+    editavel: true,
+    icon: FileText,
+    variant: "secondary",
+  },
+  {
+    nome: "PIS/COFINS",
+    key: "pis",
+    valor: 0,
+    editavel: true,
+    icon: Calculator,
+    variant: "secondary",
+  },
+  {
+    nome: "Financeiro",
+    key: "financeiro",
+    valor: 0,
+    editavel: true,
+    icon: CreditCard,
+    variant: "secondary",
+  },
+  {
+    nome: "Lucro",
+    key: "lucro",
+    valor: 0,
+    editavel: true,
+    icon: Target,
+    variant: "secondary",
+  },
+];
