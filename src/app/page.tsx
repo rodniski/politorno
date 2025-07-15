@@ -121,9 +121,7 @@ export default function Home() {
               <CardTitle className="flex items-center justify-between gap-2 text-sm sm:text-base w-full">
                 <div className="flex items-center justify-start gap-2">
                   <Package className="h-4 w-4 text-primary" />
-                  <span>
-                    Calculadora de Markup - Politorno
-                  </span>
+                  <span>Calculadora de Markup - Politorno</span>
                 </div>
                 <ModeToggle />
               </CardTitle>

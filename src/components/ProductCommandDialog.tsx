@@ -11,14 +11,36 @@ interface ProductDialogSearchProps {
 
 // Componente de item do produto memoizado
 const ProductItem = React.memo<{ produto: Produto }>(({ produto }) => (
-  <div className="flex items-center justify-between w-full py-1 sm:py-0">
+  <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full py-1 sm:py-0 gap-1 sm:gap-0">
     <div className="flex flex-col items-start gap-0.5 flex-1 min-w-0">
-      <span className="font-medium text-xs sm:text-sm truncate">
+      <span className="font-medium sm:text-sm text-primary truncate text-center w-full">
         {produto.descricao}
       </span>
-      <span className="text-xs text-muted-foreground">{produto.codigo}</span>
+      <div className="flex justify-between w-full gap-1 sm:hidden">
+        <div className="flex flex-col">
+          <span className="text-xs text-muted-foreground">Código:</span>
+          <span className="text-xs text-muted-foreground">
+            {produto.codigo}
+          </span>
+        </div>
+        <div className="flex flex-col">
+          <span className="text-xs text-muted-foreground">Custo:</span>
+          <span className="text-xs font-bold">
+            R$ {produto.custoTotal.toFixed(2)}
+          </span>
+        </div>
+        <div className="flex flex-col">
+          <span className="text-xs text-muted-foreground">Preço:</span>
+          <span className="text-xs font-bold">
+            R$ {produto.precoLiquido.toFixed(2)}
+          </span>
+        </div>
+      </div>
+      <span className="text-xs text-muted-foreground hidden sm:block">
+        {produto.codigo}
+      </span>
     </div>
-    <div className="flex flex-col items-end gap-0.5 text-xs text-right flex-shrink-0 ml-2">
+    <div className="flex flex-col items-end gap-0.5 text-xs text-right flex-shrink-0 sm:ml-2 hidden sm:flex">
       <span className="text-muted-foreground">
         Custo: <b>R$ {produto.custoTotal.toFixed(2)}</b>
       </span>
@@ -94,7 +116,7 @@ export const ProductDialogSearch: React.FC<ProductDialogSearchProps> =
         onSelect={handleSelect}
         placeholder="Digite nome ou código..."
         buttonIcon={null}
-        buttonClassName="w-full"
+        buttonClassName="w-full h-full"
       >
         {(produto) => <ProductItem produto={produto} />}
       </DialogSearch>

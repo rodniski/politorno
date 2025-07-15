@@ -78,7 +78,7 @@ export function DialogSearch<T>({
         open={open}
         onOpenChange={onOpenChange}
         showCloseButton={false}
-        className="border-2 sm:border-4 border-input min-h-80 sm:min-h-96"
+        className="border-2 sm:border-4 border-input min-h-[80vh] md:min-h-[50vh]"
       >
         <div className="relative m-2 sm:m-3">
           <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
@@ -93,9 +93,9 @@ export function DialogSearch<T>({
             className="text-sm sm:text-base bg-input pl-8 focus-visible:ring-0"
           />
         </div>
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full ">
           <div className="flex-1 overflow-hidden">
-            <CommandList className="h-full pb-12 sm:pb-16">
+            <CommandList className="min-h-[80vh] overflow-auto">
               {isLoading ? (
                 <div className="flex flex-col items-center justify-center gap-2 sm:gap-3 py-8 sm:py-10 text-xs sm:text-sm text-muted-foreground">
                   <Loader2 className="h-6 w-6 sm:h-8 sm:w-8 animate-spin text-primary" />
