@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST='{"app/page.tsx -> @/components/ui/background-beams":{"id":2282,"files":[]}}';
