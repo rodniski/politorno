@@ -40,7 +40,7 @@ export const taxas = [
     valor: 0,
     editavel: true,
     icon: Receipt,
-    variant: "destructive",
+    variant: "secondary",
   },
   {
     nome: "ICMS",
