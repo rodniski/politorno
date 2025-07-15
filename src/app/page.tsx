@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback, Suspense, lazy } from "react";
 import { DataTable } from "@/components";
 import { ProductDialogSearch } from "@/components/ProductCommandDialog";
 import {
@@ -11,37 +11,104 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calculator, DollarSign, Package } from "lucide-react";
+import { DollarSign, Package } from "lucide-react";
 import { Produto, produtos } from "@/lib/products";
 import { ModeToggle } from "@/lib/theme";
 import { formatCurrency } from "@/lib";
-import { BackgroundBeams } from "@/components/ui/background-beams";
+
+// Lazy loading do componente pesado de background
+const BackgroundBeams = lazy(() =>
+  import("@/components/ui/background-beams").then((module) => ({
+    default: module.BackgroundBeams,
+  }))
+);
+
+// Componente de loading para o background
+const BackgroundLoader = () => (
+  <div className="absolute inset-0 bg-gradient-to-br from-background to-muted/20" />
+);
 
 export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState<Produto | null>(null);
   const [percentuais, setPercentuais] = useState<Record<string, number>>({});
 
-  // Calcula o preço de venda baseado nos percentuais
-  const precoVenda = useMemo(() => {
-    if (!selectedProduct || !percentuais.custo) return 0;
+  // Memoização do callback para evitar re-renders desnecessários
+  const handleProductChange = useCallback((product: Produto) => {
+    setSelectedProduct(product);
+  }, []);
 
-    let base = percentuais.custo;
+  const handlePercentuaisChange = useCallback(
+    (newPercentuais: Record<string, number>) => {
+      setPercentuais(newPercentuais);
+    },
+    []
+  );
+
+  // Otimização do cálculo de preço de venda com useMemo mais eficiente
+  const { precoVenda, markup } = useMemo(() => {
+    if (!selectedProduct || !percentuais.custo || percentuais.custo <= 0) {
+      return { precoVenda: 0, markup: 0 };
+    }
+
+    const base = percentuais.custo;
     let subtotal = base;
 
-    // Adiciona todas as despesas (exceto lucro)
+    // Calcula despesas em uma única iteração
     Object.entries(percentuais).forEach(([key, value]) => {
       if (key !== "custo" && key !== "lucro" && value > 0) {
-        subtotal += base * (value / 100);
+        const valor = base * (value / 100);
+        subtotal += valor;
       }
     });
 
-    // Aplica o lucro sobre o subtotal
-    if (percentuais.lucro && percentuais.lucro > 0) {
-      subtotal += subtotal * (percentuais.lucro / 100);
-    }
+    // Aplica lucro sobre o subtotal
+    const lucro =
+      percentuais.lucro && percentuais.lucro > 0
+        ? subtotal * (percentuais.lucro / 100)
+        : 0;
 
-    return subtotal;
+    const precoFinal = subtotal + lucro;
+    const markupCalculado = (precoFinal / base - 1) * 100;
+
+    return {
+      precoVenda: precoFinal,
+      markup: markupCalculado,
+    };
   }, [selectedProduct, percentuais]);
+
+  // Memoização do badge do produto
+  const productBadge = useMemo(() => {
+    if (!selectedProduct) return null;
+    return (
+      <Badge variant="secondary" className="ml-auto text-xs">
+        R$ {selectedProduct.custoTotal.toFixed(2)}
+      </Badge>
+    );
+  }, [selectedProduct]);
+
+  // Memoização do resumo de preço
+  const priceSummary = useMemo(() => {
+    if (!selectedProduct) return null;
+
+    return (
+      <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 p-0 w-full h-16 backdrop-blur-sm">
+        <CardContent className="px-4 w-full flex items-center justify-between h-16">
+          <div className="flex items-center gap-2">
+            <DollarSign className="h-5 w-5" />
+            <span className="font-medium">Preço de Venda</span>
+          </div>
+          <div className="text-right">
+            <div className="text-2xl font-bold">
+              {formatCurrency(precoVenda)}
+            </div>
+            <div className="text-xs opacity-80">
+              Markup: {markup.toFixed(1)}%
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }, [selectedProduct, precoVenda, markup]);
 
   return (
     <div className="h-screen relative overflow-auto">
@@ -57,57 +124,28 @@ export default function Home() {
                   <Package className="h-4 w-4 text-primary" />
                   Calculadora de Markup - Politorno
                 </div>
-                {selectedProduct && (
-                  <Badge variant="secondary" className="ml-auto text-xs">
-                    R$ {selectedProduct.custoTotal.toFixed(2)}
-                  </Badge>
-                )}
+                {productBadge}
               </CardTitle>
               <ProductDialogSearch
                 produtos={produtos}
                 value={selectedProduct}
-                onChange={setSelectedProduct}
+                onChange={handleProductChange}
               />
             </CardHeader>
             <CardContent>
               <DataTable
                 produto={selectedProduct}
                 percentuais={percentuais}
-                onPercentuaisChange={setPercentuais}
+                onPercentuaisChange={handlePercentuaisChange}
               />
             </CardContent>
-            <CardFooter>
-              {/* Compact Price Summary */}
-              {selectedProduct && (
-                <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 p-0 w-full h-16 backdrop-blur-sm">
-                  <CardContent className="px-4 w-full flex items-center justify-between h-16">
-                    <div className="flex items-center gap-2">
-                      <DollarSign className="h-5 w-5" />
-                      <span className="font-medium">Preço de Venda</span>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-2xl font-bold">
-                        {formatCurrency(precoVenda)}
-                      </div>
-                      <div className="text-xs opacity-80">
-                        Markup:{" "}
-                        {percentuais.custo && percentuais.custo > 0
-                          ? (
-                              (precoVenda / percentuais.custo - 1) *
-                              100
-                            ).toFixed(1)
-                          : "0.0"}
-                        %
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-            </CardFooter>
+            <CardFooter>{priceSummary}</CardFooter>
           </Card>
         </div>
       </div>
-      <BackgroundBeams className="absolute inset-0 opacity-50" />
+      <Suspense fallback={<BackgroundLoader />}>
+        <BackgroundBeams className="absolute inset-0 opacity-50" />
+      </Suspense>
     </div>
   );
 }

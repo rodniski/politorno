@@ -12,7 +12,7 @@ export const formatCurrency = (value: number) => {
   }).format(value);
 };
 
-export const getRowStyles = (variant: string, index: number) => {
+export const getRowStyles = (variant: string) => {
   const baseStyles = "transition-all duration-200 hover:bg-accent/50";
   const borderStyles = {
     default: "border-l-primary",
