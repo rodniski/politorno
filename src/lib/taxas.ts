@@ -37,8 +37,8 @@ export const taxas = [
   {
     nome: "I. Renda",
     key: "ir",
-    valor: 0,
-    editavel: true,
+    valor: 2.5,
+    editavel: false,
     icon: Receipt,
     variant: "default",
   },
@@ -53,8 +53,8 @@ export const taxas = [
   {
     nome: "PIS/COFINS",
     key: "pis",
-    valor: 0,
-    editavel: true,
+    valor: 9.25,
+    editavel: false,
     icon: Calculator,
     variant: "default",
   },
