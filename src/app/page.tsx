@@ -91,14 +91,16 @@ export default function Home() {
     if (!selectedProduct) return null;
 
     return (
-      <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 p-0 w-full h-16 backdrop-blur-sm">
-        <CardContent className="px-4 w-full flex items-center justify-between h-16">
+      <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 p-0 w-full backdrop-blur-sm">
+        <CardContent className="px-3 sm:px-4 py-3 sm:py-4 w-full flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <DollarSign className="h-5 w-5" />
-            <span className="font-medium">Preço de Venda</span>
+            <DollarSign className="h-4 w-4 sm:h-5 sm:w-5" />
+            <span className="font-medium text-sm sm:text-base">
+              Preço de Venda
+            </span>
           </div>
           <div className="text-right">
-            <div className="text-2xl font-bold">
+            <div className="text-lg sm:text-2xl font-bold">
               {formatCurrency(precoVenda)}
             </div>
             <div className="text-xs opacity-80">
@@ -111,20 +113,19 @@ export default function Home() {
   }, [selectedProduct, precoVenda, markup]);
 
   return (
-    <div className="h-screen relative overflow-auto">
-      <div className="absolute top-5 right-5 z-20">
-        <ModeToggle />
-      </div>
-      <div className="p-10">
-        <div className="max-w-lg mx-auto space-y-4">
+    <div className="min-h-screen relative overflow-auto">
+      <div className="p-4 sm:p-6 lg:p-10">
+        <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto space-y-3 sm:space-y-4">
           <Card className="shadow-lg shadow-primary/20 border-0 bg-popover/95 backdrop-blur-sm relative z-10">
-            <CardHeader className="flex flex-col items-center justify-between gap-4">
-              <CardTitle className="flex items-center justify-between gap-2 text-base w-full">
+            <CardHeader className="flex flex-col items-center justify-between gap-3 sm:gap-4 p-4 sm:p-6">
+              <CardTitle className="flex items-center justify-between gap-2 text-sm sm:text-base w-full">
                 <div className="flex items-center justify-start gap-2">
                   <Package className="h-4 w-4 text-primary" />
-                  Calculadora de Markup - Politorno
+                  <span>
+                    Calculadora de Markup - Politorno
+                  </span>
                 </div>
-                {productBadge}
+                <ModeToggle />
               </CardTitle>
               <ProductDialogSearch
                 produtos={produtos}
@@ -132,14 +133,14 @@ export default function Home() {
                 onChange={handleProductChange}
               />
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-4 sm:p-6">
               <DataTable
                 produto={selectedProduct}
                 percentuais={percentuais}
                 onPercentuaisChange={handlePercentuaisChange}
               />
             </CardContent>
-            <CardFooter>{priceSummary}</CardFooter>
+            <CardFooter className="p-4 sm:p-6 pt-0">{priceSummary}</CardFooter>
           </Card>
         </div>
       </div>

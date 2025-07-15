@@ -64,7 +64,7 @@ export function DialogSearch<T>({
       <Button
         type="button"
         variant="outline"
-        className={`w-full justify-between group hover:border-primary/50 transition-colors ${
+        className={`w-full justify-between group hover:border-primary/50 transition-colors text-sm sm:text-base ${
           buttonClassName || ""
         }`}
         onClick={() => !disabled && onOpenChange(true)}
@@ -78,9 +78,9 @@ export function DialogSearch<T>({
         open={open}
         onOpenChange={onOpenChange}
         showCloseButton={false}
-        className="border-4 border-input min-h-96"
+        className="border-2 sm:border-4 border-input min-h-80 sm:min-h-96"
       >
-        <div className="relative m-2">
+        <div className="relative m-2 sm:m-3">
           <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
             <Search className="h-4 w-4" />
           </div>
@@ -90,20 +90,20 @@ export function DialogSearch<T>({
             value={term}
             onChange={(e) => onTermChange(e.target.value)}
             onKeyDown={onKeyDown}
-            className="text-base bg-input pl-8 focus-visible:ring-0"
+            className="text-sm sm:text-base bg-input pl-8 focus-visible:ring-0"
           />
         </div>
         <div className="flex flex-col h-full">
           <div className="flex-1 overflow-hidden">
-            <CommandList className="h-full pb-16">
+            <CommandList className="h-full pb-12 sm:pb-16">
               {isLoading ? (
-                <div className="flex flex-col items-center justify-center gap-3 py-10 text-sm text-muted-foreground">
-                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                <div className="flex flex-col items-center justify-center gap-2 sm:gap-3 py-8 sm:py-10 text-xs sm:text-sm text-muted-foreground">
+                  <Loader2 className="h-6 w-6 sm:h-8 sm:w-8 animate-spin text-primary" />
                   <span>Buscando...</span>
                 </div>
               ) : searchError ? (
-                <div className="flex flex-col items-center justify-center gap-2 py-10 text-sm text-muted-foreground">
-                  <XCircle className="h-8 w-8 text-destructive" />
+                <div className="flex flex-col items-center justify-center gap-2 py-8 sm:py-10 text-xs sm:text-sm text-muted-foreground">
+                  <XCircle className="h-6 w-6 sm:h-8 sm:w-8 text-destructive" />
                   <div className="font-semibold text-destructive">
                     Erro ao buscar
                   </div>
@@ -159,9 +159,9 @@ export function DialogSearch<T>({
                 )
               ) : (
                 <CommandEmpty>
-                  <div className="text-center py-6">
-                    <Search className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-                    <div className="text-sm text-muted-foreground">
+                  <div className="text-center py-4 sm:py-6">
+                    <Search className="h-6 w-6 sm:h-8 sm:w-8 mx-auto text-muted-foreground mb-2" />
+                    <div className="text-xs sm:text-sm text-muted-foreground">
                       {term.trim().length < 2
                         ? "Digite pelo menos 2 caracteres para buscar"
                         : hasUserTyped
@@ -178,25 +178,25 @@ export function DialogSearch<T>({
               )}
             </CommandList>
           </div>
-          <div className="bg-border border-t border-border flex justify-start gap-2 items-center w-full h-12 p-2 flex-shrink-0">
-            <div className="flex gap-2">
+          <div className="bg-border border-t border-border flex justify-start gap-2 items-center w-full h-10 sm:h-12 p-2 flex-shrink-0">
+            <div className="flex gap-1 sm:gap-2">
               <Button
-                className="size-6 rounded-sm bg-background flex gap-2"
+                className="size-5 sm:size-6 rounded-sm bg-background flex gap-1 sm:gap-2"
                 onClick={() => onOpenChange(false)}
               >
                 <span className="text-xs text-foreground">esc</span>
               </Button>
-              <span>Cancelar</span>
+              <span className="text-xs sm:text-sm">Cancelar</span>
             </div>
-            <Separator orientation="vertical" className="h-6" />
-            <div className="flex gap-2">
+            <Separator orientation="vertical" className="h-4 sm:h-6" />
+            <div className="flex gap-1 sm:gap-2">
               <Button
-                className=" text-foreground size-6 rounded-sm bg-background flex gap-2"
+                className="text-foreground size-5 sm:size-6 rounded-sm bg-background flex gap-1 sm:gap-2"
                 onClick={() => onOpenChange(false)}
               >
                 <CornerDownLeft className="h-2 w-2" />
               </Button>
-              Selecionar
+              <span className="text-xs sm:text-sm">Selecionar</span>
             </div>
           </div>
         </div>

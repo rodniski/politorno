@@ -11,9 +11,11 @@ interface ProductDialogSearchProps {
 
 // Componente de item do produto memoizado
 const ProductItem = React.memo<{ produto: Produto }>(({ produto }) => (
-  <div className="flex items-center justify-between w-full py-0">
+  <div className="flex items-center justify-between w-full py-1 sm:py-0">
     <div className="flex flex-col items-start gap-0.5 flex-1 min-w-0">
-      <span className="font-medium text-sm truncate">{produto.descricao}</span>
+      <span className="font-medium text-xs sm:text-sm truncate">
+        {produto.descricao}
+      </span>
       <span className="text-xs text-muted-foreground">{produto.codigo}</span>
     </div>
     <div className="flex flex-col items-end gap-0.5 text-xs text-right flex-shrink-0 ml-2">
