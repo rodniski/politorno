@@ -8,7 +8,7 @@ export const taxas = [
     valor: 0,
     editavel: true,
     icon: Package,
-    variant: "secondary",
+    variant: "default",
   },
   {
     nome: "Frete",
@@ -16,7 +16,7 @@ export const taxas = [
     valor: 0,
     editavel: true,
     icon: Truck,
-    variant: "secondary",
+    variant: "default",
   },
   {
     nome: "Despesas Fixas",
@@ -24,7 +24,7 @@ export const taxas = [
     valor: 0,
     editavel: true,
     icon: Building,
-    variant: "secondary",
+    variant: "default",
   },
   {
     nome: "Comissão Repres.",
@@ -32,7 +32,7 @@ export const taxas = [
     valor: 0,
     editavel: true,
     icon: Users,
-    variant: "secondary",
+    variant: "default",
   },
   {
     nome: "I. Renda",
@@ -40,7 +40,7 @@ export const taxas = [
     valor: 0,
     editavel: true,
     icon: Receipt,
-    variant: "secondary",
+    variant: "default",
   },
   {
     nome: "ICMS",
@@ -48,7 +48,7 @@ export const taxas = [
     valor: 0,
     editavel: true,
     icon: FileText,
-    variant: "secondary",
+    variant: "default",
   },
   {
     nome: "PIS/COFINS",
@@ -56,7 +56,7 @@ export const taxas = [
     valor: 0,
     editavel: true,
     icon: Calculator,
-    variant: "secondary",
+    variant: "default",
   },
   {
     nome: "Financeiro",
@@ -64,7 +64,7 @@ export const taxas = [
     valor: 0,
     editavel: true,
     icon: CreditCard,
-    variant: "secondary",
+    variant: "default",
   },
   {
     nome: "Lucro",
@@ -72,6 +72,6 @@ export const taxas = [
     valor: 0,
     editavel: true,
     icon: Target,
-    variant: "secondary",
+    variant: "default",
   },
 ];

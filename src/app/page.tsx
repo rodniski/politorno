@@ -76,16 +76,6 @@ export default function Home() {
     };
   }, [selectedProduct, percentuais]);
 
-  // Memoização do badge do produto
-  const productBadge = useMemo(() => {
-    if (!selectedProduct) return null;
-    return (
-      <Badge variant="secondary" className="ml-auto text-xs">
-        R$ {selectedProduct.custoTotal.toFixed(2)}
-      </Badge>
-    );
-  }, [selectedProduct]);
-
   // Memoização do resumo de preço
   const priceSummary = useMemo(() => {
     if (!selectedProduct) return null;
@@ -131,7 +121,7 @@ export default function Home() {
                 onChange={handleProductChange}
               />
             </CardHeader>
-            <CardContent className="p-4 sm:p-6">
+            <CardContent className="p-2 sm:p-3">
               <DataTable
                 produto={selectedProduct}
                 percentuais={percentuais}
